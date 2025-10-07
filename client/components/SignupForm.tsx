@@ -66,7 +66,7 @@ export default function SignupForm() {
     const number = normalizeZA(whatsapp);
     const res = await fetch("/api/send-sms-otp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ number }) });
     const data = await res.json();
-    if (data.ok) setSmsSent(true);
+    if (data.ok) { setSmsSent(true); if (data.devCode) setSmsCode(data.devCode); }
   };
   const verifySms = async () => {
     const number = normalizeZA(whatsapp);
