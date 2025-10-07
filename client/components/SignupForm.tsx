@@ -179,9 +179,24 @@ export default function SignupForm() {
   );
 
   if (result?.success) {
+    localStorage.setItem("driveiq_email", email);
     const creditsPerReferral = 25;
     const randEquivalent = "R10.00";
     const minWithdrawal = "R700.00";
+
+    const confirmPay = async () => {
+      await fetch("/api/confirm-payment", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      alert("Payment confirmed (demo)");
+    };
+    const sendVision = async () => {
+      const r = await fetch("/api/send-vision-link", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
+      const j = await r.json();
+      if (j.ok) {
+        const link = location.origin + j.url;
+        prompt("Vision test link (send to learner)", link);
+      }
+    };
+
     return (
       <div className="rounded-xl border bg-card/60 p-6 shadow space-y-4">
         <div className="flex items-center gap-2 text-green-600 font-semibold"><Check className="size-5" /> You're on the list!</div>
@@ -191,6 +206,10 @@ export default function SignupForm() {
         {shareButtons(result.referralLink)}
         <div className="rounded-md border bg-background/60 p-3 text-xs text-muted-foreground">
           Earn {creditsPerReferral} credits ({randEquivalent}) per paid referral. Minimum withdrawal balance {minWithdrawal}. Redeemable as gift cards, airtime, data, or cash.
+        </div>
+        <div className="flex flex-wrap gap-2 pt-2">
+          <Button type="button" variant="outline" onClick={confirmPay}>Confirm Payment</Button>
+          <Button type="button" onClick={sendVision}>Send Vision Test Link</Button>
         </div>
         {typeof remaining === "number" && (
           <p className="text-xs text-muted-foreground">Remaining Early Bird slots: <span className="font-semibold text-foreground">{remaining}</span></p>
