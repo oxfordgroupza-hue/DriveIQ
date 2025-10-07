@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { getSlots, postSignup } from "./routes/signup";
+import { sendWhatsAppOtp, verifyWhatsAppOtp, sendSmsOtp, verifySmsOtp, sendEmailOtp, verifyEmailOtp } from "./routes/otp";
 
 export function createServer() {
   const app = express();
@@ -23,6 +24,14 @@ export function createServer() {
   // DriveIQ Early Bird
   app.get("/api/slots", getSlots);
   app.post("/api/signup", postSignup);
+
+  // OTP endpoints (demo/dev)
+  app.post("/api/send-whatsapp-otp", sendWhatsAppOtp);
+  app.post("/api/verify-whatsapp-otp", verifyWhatsAppOtp);
+  app.post("/api/send-sms-otp", sendSmsOtp);
+  app.post("/api/verify-sms-otp", verifySmsOtp);
+  app.post("/api/send-email-otp", sendEmailOtp);
+  app.post("/api/verify-email-otp", verifyEmailOtp);
 
   return app;
 }
