@@ -45,9 +45,21 @@ export const getSlots: RequestHandler = (_req, res) => {
 };
 
 export const postSignup: RequestHandler = (req, res) => {
-  const { name, email, whatsapp, terms, referrer } = (req.body || {}) as SignupBody;
-  if (!name || !email || !whatsapp || !terms) {
-    return res.status(400).json({ success: false, error: "Missing fields" });
+  const {
+    name, email, whatsapp, province, city, institution, licenseCode,
+    hasWhatsApp, smsVerified, whatsappVerified, emailVerified, terms, referrer,
+  } = (req.body || {}) as SignupBody;
+
+  if (!name || !email || !whatsapp || !province || !city || !institution || !licenseCode || terms !== true) {
+    return res.status(400).json({ success: false, error: "Missing required fields" });
+  }
+  if (!smsVerified) {
+    return res.status(400).json({ success: false, error: "SMS verification required" });
+  }
+  if (hasWhatsApp) {
+    if (!whatsappVerified) return res.status(400).json({ success: false, error: "WhatsApp verification required" });
+  } else {
+    if (!emailVerified) return res.status(400).json({ success: false, error: "Email verification required" });
   }
 
   const existing = signups.get(email.toLowerCase());
@@ -58,7 +70,19 @@ export const postSignup: RequestHandler = (req, res) => {
   }
 
   const code = genCode();
-  const rec: Record = { name, email: email.toLowerCase(), whatsapp, code, referrer, createdAt: Date.now() };
+  const rec: Record = {
+    name,
+    email: email.toLowerCase(),
+    whatsapp,
+    province,
+    city,
+    institution,
+    licenseCode,
+    hasWhatsApp,
+    code,
+    referrer,
+    createdAt: Date.now(),
+  };
   signups.set(rec.email, rec);
   if (remainingSlots > 0) remainingSlots -= 1;
 
