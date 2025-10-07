@@ -20,5 +20,9 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // DriveIQ Early Bird
+  app.get("/api/slots", getSlots);
+  app.post("/api/signup", postSignup);
+
   return app;
 }
