@@ -30,7 +30,7 @@ interface Record {
   createdAt: number;
 }
 
-const signups = new Map<string, Record>();
+import { setRecordByEmail, getRecordByEmail, type Record as Rec } from "./_records";
 let remainingSlots = 500;
 
 function genCode(len = 8) {
@@ -62,7 +62,7 @@ export const postSignup: RequestHandler = (req, res) => {
     if (!emailVerified) return res.status(400).json({ success: false, error: "Email verification required" });
   }
 
-  const existing = signups.get(email.toLowerCase());
+  const existing = getRecordByEmail(email.toLowerCase());
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
   if (existing) {
@@ -70,7 +70,7 @@ export const postSignup: RequestHandler = (req, res) => {
   }
 
   const code = genCode();
-  const rec: Record = {
+  const rec: Rec = {
     name,
     email: email.toLowerCase(),
     whatsapp,
@@ -82,8 +82,10 @@ export const postSignup: RequestHandler = (req, res) => {
     code,
     referrer,
     createdAt: Date.now(),
+    paid: false,
+    vision: { needed: true, status: "pending" },
   };
-  signups.set(rec.email, rec);
+  setRecordByEmail(rec.email, rec);
   if (remainingSlots > 0) remainingSlots -= 1;
 
   return res.json({ success: true, code, referralLink: `${baseUrl}/?ref=${code}`, remaining: remainingSlots });
