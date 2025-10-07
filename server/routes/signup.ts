@@ -1,7 +1,34 @@
 import { RequestHandler } from "express";
 
-interface SignupBody { name: string; email: string; whatsapp: string; terms: boolean; referrer?: string }
-interface Record { name: string; email: string; whatsapp: string; code: string; referrer?: string; createdAt: number }
+interface SignupBody {
+  name: string;
+  email: string;
+  whatsapp: string;
+  province: string;
+  city: string;
+  institution: string;
+  licenseCode: string;
+  hasWhatsApp: boolean;
+  smsVerified: boolean;
+  whatsappVerified?: boolean;
+  emailVerified?: boolean;
+  studentCardImage?: string;
+  terms: boolean;
+  referrer?: string;
+}
+interface Record {
+  name: string;
+  email: string;
+  whatsapp: string;
+  province: string;
+  city: string;
+  institution: string;
+  licenseCode: string;
+  hasWhatsApp: boolean;
+  code: string;
+  referrer?: string;
+  createdAt: number;
+}
 
 const signups = new Map<string, Record>();
 let remainingSlots = 500;
