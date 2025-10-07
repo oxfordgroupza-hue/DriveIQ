@@ -9,7 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/Layout";
-import Placeholder from "./pages/Placeholder";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
@@ -22,8 +23,8 @@ const App = () => (
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Index />} />
-            <Route path="privacy" element={<Placeholder />} />
-            <Route path="terms" element={<Placeholder />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="terms" element={<Terms />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
