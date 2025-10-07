@@ -91,7 +91,7 @@ export default function SignupForm() {
   const sendEmail = async () => {
     const res = await fetch("/api/send-email-otp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) });
     const data = await res.json();
-    if (data.ok) setEmailSent(true);
+    if (data.ok) { setEmailSent(true); if (data.devCode) setEmailCode(data.devCode); }
   };
   const verifyEmail = async () => {
     const res = await fetch("/api/verify-email-otp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, code: emailCode }) });
