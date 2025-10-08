@@ -198,7 +198,7 @@ export default function SignupForm() {
     };
 
     return (
-      <div className="rounded-xl border bg-card/60 p-6 shadow space-y-4">
+      <div className="rounded-xl border bg-card/60 p-6 shadow space-y-4 text-center">
         <div className="flex items-center gap-2 text-green-600 font-semibold"><Check className="size-5" /> You're on the list!</div>
         <p className="text-sm text-muted-foreground">Your unique referral link:</p>
         <div className="rounded-md border bg-background p-3 font-mono text-sm break-all">{result.referralLink}</div>
@@ -207,7 +207,7 @@ export default function SignupForm() {
         <div className="rounded-md border bg-background/60 p-3 text-xs text-muted-foreground">
           Earn {creditsPerReferral} credits ({randEquivalent}) per paid referral. Minimum withdrawal balance {minWithdrawal}. Redeemable as gift cards, airtime, data, or cash.
         </div>
-        <div className="flex flex-wrap gap-2 pt-2">
+        <div className="flex flex-wrap gap-2 pt-2 justify-center md:justify-start">
           <Button type="button" variant="outline" onClick={confirmPay}>Confirm Payment</Button>
           <Button type="button" onClick={sendVision}>Send Vision Test Link</Button>
         </div>
@@ -219,7 +219,7 @@ export default function SignupForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-xl border bg-card/60 p-6 shadow space-y-6">
+    <form onSubmit={onSubmit} className="rounded-xl border bg-card/60 p-6 shadow space-y-6 text-center md:text-left">
       <div className="grid gap-3 sm:grid-cols-2">
         <button type="button" onClick={() => setSocialProvider("facebook")} className="flex items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-accent"><Globe className="size-4" /> Continue with Facebook</button>
         <button type="button" onClick={() => setSocialProvider("instagram")} className="flex items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-accent"><Globe className="size-4" /> Continue with Instagram</button>
@@ -335,7 +335,7 @@ export default function SignupForm() {
         <input id="terms" type="checkbox" checked={terms} onChange={e=>setTerms(e.target.checked)} className="mt-1 size-4 accent-primary" />
         <label htmlFor="terms">I agree to the <a href="/terms" className="underline">Terms</a> and <a href="/privacy" className="underline">Privacy Policy</a>.</label>
       </div>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3 justify-center md:justify-start">
         <Button disabled={!canSubmit() || submitting} className="bg-primary text-primary-foreground hover:bg-primary/90">Join Early Bird — R99</Button>
         {typeof remaining === "number" && (
           <span className="text-xs text-muted-foreground">Remaining slots: <span className="font-semibold text-foreground">{remaining}</span></span>
