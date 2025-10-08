@@ -26,7 +26,7 @@ export default function Index() {
       {/* Hero */}
       <section className={`relative overflow-hidden ${heroBg}`}>
         <div className="container grid gap-10 py-20 md:py-28 lg:grid-cols-2 lg:items-center">
-          <div>
+          <div className="text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 text-xs">
               <span className="inline-flex size-2 rounded-full bg-accent" /> Early Bird now open — R99 once-off
             </div>
@@ -36,7 +36,7 @@ export default function Index() {
             <p className="mt-4 text-lg text-muted-foreground max-w-prose">
               DriveIQ combines interactive K53 theory, AI vision screening, realistic driving simulation, and instructor-grade analytics into one seamless learner ecosystem.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
               <a href="#signup"><Button className="bg-primary text-primary-foreground hover:bg-primary/90">Join Early Bird Waiting List</Button></a>
               <a href="#features"><Button variant="outline">Explore Features</Button></a>
             </div>
@@ -44,7 +44,7 @@ export default function Index() {
               <div className="text-xs text-muted-foreground mb-2">Launching in</div>
               <Countdown targetDate={launchDate} />
             </div>
-            <div className="mt-6 grid grid-cols-2 gap-4 text-xs text-muted-foreground sm:grid-cols-4">
+            <div className="mt-6 grid grid-cols-2 gap-4 text-center text-xs text-muted-foreground sm:grid-cols-4">
               <div className="rounded-md border bg-background/50 p-3">TVET-ready</div>
               <div className="rounded-md border bg-background/50 p-3">NSFAS-aligned</div>
               <div className="rounded-md border bg-background/50 p-3">AI-driven</div>
@@ -82,7 +82,7 @@ export default function Index() {
       {/* Vision emphasis */}
       <section className="relative overflow-hidden border-y bg-gradient-to-br from-background via-secondary/50 to-background">
         <div className="container py-16 grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div className="order-2 lg:order-1">
+          <div className="order-2 lg:order-1 text-center lg:text-left">
             <h3 className="text-2xl font-bold">AI vision checks for safer training</h3>
             <p className="mt-3 text-muted-foreground">Learners are guided through AI screening before simulator or on-road sessions. Prescriptions are verified by optometrists, and improvements tracked once spectacles are provided.</p>
             <ul className="mt-5 text-sm text-muted-foreground list-disc pl-5 space-y-2">
@@ -102,7 +102,7 @@ export default function Index() {
       {/* Early Bird Offer */}
       <section id="offer" className="container py-16 md:py-24">
         <div className="grid gap-8 lg:grid-cols-5 lg:items-center">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 text-center lg:text-left">
             <h3 className="text-3xl font-bold">Early Bird Offer — R99 once-off</h3>
             <ul className="mt-4 text-muted-foreground space-y-2 text-sm">
               <li>Access to K53 theory and AI vision screening</li>
@@ -112,7 +112,7 @@ export default function Index() {
               <li>Limited slots — urgency and exclusivity apply</li>
             </ul>
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 mx-auto w-full max-w-md">
             <SignupForm />
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Index() {
       <section id="academy" className="relative overflow-hidden border-y bg-gradient-to-br from-background via-secondary/50 to-background">
         <div className="container py-16">
           <div className="grid gap-6 md:grid-cols-3">
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 text-center md:text-left">
               <h3 className="text-3xl font-bold">DriveIQ Academy</h3>
               <p className="mt-3 text-muted-foreground">Life skills and job readiness beyond driving. Defensive strategies, safety awareness, soft skills, and employability — designed with TVET and NSFAS pathways in mind.</p>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
