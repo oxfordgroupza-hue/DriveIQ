@@ -239,7 +239,8 @@ export default function SignupForm() {
           socialProvider: socialProvider || null,
           referralLink: data?.referralLink || null,
           code: data?.code || null,
-          remaining: typeof data?.remaining === "number" ? data.remaining : null,
+          remaining:
+            typeof data?.remaining === "number" ? data.remaining : null,
           uid: auth.currentUser?.uid || null,
           createdAt: serverTimestamp(),
         });

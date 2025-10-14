@@ -23,16 +23,22 @@ export const firebaseConfig = {
   measurementId: "G-HEP756WE13",
 };
 
-export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+export const firebaseApp = getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
 // Auth with durable persistence
 export const auth: Auth = getAuth(firebaseApp);
-setPersistence(auth, indexedDBLocalPersistence).catch(() => setPersistence(auth, browserLocalPersistence));
+setPersistence(auth, indexedDBLocalPersistence).catch(() =>
+  setPersistence(auth, browserLocalPersistence),
+);
 
 // Firestore with local cache where available
 let _db: Firestore;
 try {
-  _db = initializeFirestore(firebaseApp, { localCache: persistentLocalCache() });
+  _db = initializeFirestore(firebaseApp, {
+    localCache: persistentLocalCache(),
+  });
 } catch {
   _db = getFirestore(firebaseApp);
 }

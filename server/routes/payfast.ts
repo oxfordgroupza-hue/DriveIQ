@@ -2,12 +2,27 @@ import { RequestHandler } from "express";
 import { createHash } from "crypto";
 import { getRecordByEmail, setRecordByEmail } from "./_records";
 
-function pfParamString(params: Record<string, string | number | undefined | null>, passphrase?: string) {
+function pfParamString(
+  params: Record<string, string | number | undefined | null>,
+  passphrase?: string,
+) {
   const entries = Object.entries(params)
-    .filter(([k, v]) => k !== "signature" && v !== undefined && v !== null && String(v).length > 0)
+    .filter(
+      ([k, v]) =>
+        k !== "signature" &&
+        v !== undefined &&
+        v !== null &&
+        String(v).length > 0,
+    )
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v).trim())}`);
-  if (passphrase) entries.push(`${encodeURIComponent("passphrase")}=${encodeURIComponent(passphrase)}`);
+    .map(
+      ([k, v]) =>
+        `${encodeURIComponent(k)}=${encodeURIComponent(String(v).trim())}`,
+    );
+  if (passphrase)
+    entries.push(
+      `${encodeURIComponent("passphrase")}=${encodeURIComponent(passphrase)}`,
+    );
   return entries.join("&");
 }
 
@@ -24,11 +39,19 @@ export const initiatePayfast: RequestHandler = (req, res) => {
     return res.status(500).json({ ok: false, error: "PayFast not configured" });
   }
 
-  const { email, name, amount } = (req.body || {}) as { email?: string; name?: string; amount?: number };
-  if (!email || !amount) return res.status(400).json({ ok: false, error: "email and amount required" });
+  const { email, name, amount } = (req.body || {}) as {
+    email?: string;
+    name?: string;
+    amount?: number;
+  };
+  if (!email || !amount)
+    return res
+      .status(400)
+      .json({ ok: false, error: "email and amount required" });
 
   const rec = getRecordByEmail(email.toLowerCase());
-  if (!rec) return res.status(404).json({ ok: false, error: "signup required" });
+  if (!rec)
+    return res.status(404).json({ ok: false, error: "signup required" });
 
   const baseUrl = `${req.protocol}://${req.get("host")}`;
   const payload: Record<string, string | number> = {
@@ -46,14 +69,22 @@ export const initiatePayfast: RequestHandler = (req, res) => {
 
   const signature = pfSignature(payload, passphrase);
 
-  return res.json({ ok: true, gateway: "https://www.payfast.co.za/eng/process", fields: { ...payload, signature } });
+  return res.json({
+    ok: true,
+    gateway: "https://www.payfast.co.za/eng/process",
+    fields: { ...payload, signature },
+  });
 };
 
 export const payfastNotify: RequestHandler = (req, res) => {
   try {
     const passphrase = process.env.PAYFAST_PASSPHRASE || "";
     const posted = req.body || {};
-    const { signature: postedSig, m_payment_id, payment_status } = posted as any;
+    const {
+      signature: postedSig,
+      m_payment_id,
+      payment_status,
+    } = posted as any;
     const calcSig = pfSignature(posted, passphrase);
 
     if (!postedSig || postedSig !== calcSig) {
@@ -64,7 +95,10 @@ export const payfastNotify: RequestHandler = (req, res) => {
       const email = m_payment_id.toLowerCase();
       const rec = getRecordByEmail(email);
       if (rec) {
-        const paid = payment_status === "COMPLETE" || payment_status === "COMPLETE-PENDING" || posted.amount_gross === "99.00";
+        const paid =
+          payment_status === "COMPLETE" ||
+          payment_status === "COMPLETE-PENDING" ||
+          posted.amount_gross === "99.00";
         if (paid) setRecordByEmail(email, { ...rec, paid: true });
       }
     }

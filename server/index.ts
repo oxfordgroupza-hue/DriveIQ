@@ -3,8 +3,20 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { getSlots, postSignup } from "./routes/signup";
-import { sendWhatsAppOtp, verifyWhatsAppOtp, sendSmsOtp, verifySmsOtp, sendEmailOtp, verifyEmailOtp } from "./routes/otp";
-import { sendVisionLink, getVisionToken, submitVisionResult, getVisionDoc } from "./routes/vision";
+import {
+  sendWhatsAppOtp,
+  verifyWhatsAppOtp,
+  sendSmsOtp,
+  verifySmsOtp,
+  sendEmailOtp,
+  verifyEmailOtp,
+} from "./routes/otp";
+import {
+  sendVisionLink,
+  getVisionToken,
+  submitVisionResult,
+  getVisionDoc,
+} from "./routes/vision";
 import { getUser, confirmPayment } from "./routes/user";
 import { initiatePayfast, payfastNotify } from "./routes/payfast";
 
@@ -42,7 +54,11 @@ export function createServer() {
 
   // PayFast
   app.post("/api/payfast/initiate", initiatePayfast);
-  app.post("/api/payfast/notify", express.urlencoded({ extended: false }), payfastNotify);
+  app.post(
+    "/api/payfast/notify",
+    express.urlencoded({ extended: false }),
+    payfastNotify,
+  );
 
   // Vision testing
   app.post("/api/send-vision-link", sendVisionLink);
