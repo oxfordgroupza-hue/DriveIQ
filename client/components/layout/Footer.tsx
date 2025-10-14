@@ -30,9 +30,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-border/60">
-        <div className="container py-6 text-xs text-muted-foreground flex items-center justify-between">
-          <span>© {year} DriveIQ. All rights reserved.</span>
-          <span>Built for students, TVET colleges, and NSFAS beneficiaries.</span>
+        <div className="container py-6 text-xs text-muted-foreground flex items-center justify-center text-center">
+          <span>© 2025 DriveIQ Academy. Powered by Oxford Business Group (PTY) LTD. All rights reserved.</span>
         </div>
       </div>
     </footer>
