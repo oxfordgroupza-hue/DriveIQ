@@ -6,6 +6,7 @@ import { getSlots, postSignup } from "./routes/signup";
 import { sendWhatsAppOtp, verifyWhatsAppOtp, sendSmsOtp, verifySmsOtp, sendEmailOtp, verifyEmailOtp } from "./routes/otp";
 import { sendVisionLink, getVisionToken, submitVisionResult, getVisionDoc } from "./routes/vision";
 import { getUser, confirmPayment } from "./routes/user";
+import { initiatePayfast, payfastNotify } from "./routes/payfast";
 
 export function createServer() {
   const app = express();
@@ -40,7 +41,6 @@ export function createServer() {
   app.post("/api/confirm-payment", confirmPayment);
 
   // PayFast
-  const { initiatePayfast, payfastNotify } = await import("./routes/payfast");
   app.post("/api/payfast/initiate", initiatePayfast);
   app.post("/api/payfast/notify", express.urlencoded({ extended: false }), payfastNotify);
 
