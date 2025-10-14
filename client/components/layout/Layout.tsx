@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Banner from "./Banner";
 import BottomNav from "./BottomNav";
+import Splash from "./Splash";
 
 export default function Layout() {
   return (
