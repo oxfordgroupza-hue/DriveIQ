@@ -1,4 +1,17 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
+import {
+  getAuth,
+  setPersistence,
+  indexedDBLocalPersistence,
+  browserLocalPersistence,
+  Auth,
+} from "firebase/auth";
+import {
+  getFirestore,
+  initializeFirestore,
+  persistentLocalCache,
+  Firestore,
+} from "firebase/firestore";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCi6OymyWdeWZY2moZGIP4vhJTZ0YLaXt0",
@@ -12,14 +25,25 @@ export const firebaseConfig = {
 
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
+// Auth with durable persistence
+export const auth: Auth = getAuth(firebaseApp);
+setPersistence(auth, indexedDBLocalPersistence).catch(() => setPersistence(auth, browserLocalPersistence));
+
+// Firestore with local cache where available
+let _db: Firestore;
+try {
+  _db = initializeFirestore(firebaseApp, { localCache: persistentLocalCache() });
+} catch {
+  _db = getFirestore(firebaseApp);
+}
+export const db = _db;
+
 export async function initAnalytics() {
   try {
     const { isSupported, getAnalytics } = await import("firebase/analytics");
     if (await isSupported()) {
       return getAnalytics(firebaseApp);
     }
-  } catch (err) {
-    // ignore analytics init errors
-  }
+  } catch (err) {}
   return null;
 }
