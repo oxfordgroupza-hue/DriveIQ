@@ -9,7 +9,8 @@ export default function Layout() {
     <div className="min-h-dvh flex flex-col">
       <Header />
       <Banner />
-      <main className="flex-1 pt-20 pb-20 lg:pb-0">{/* header + banner + bottom nav height */}
+      <main className="flex-1 pt-20 pb-20 lg:pb-0">
+        {/* header + banner + bottom nav height */}
         <Outlet />
       </main>
       <Footer />
