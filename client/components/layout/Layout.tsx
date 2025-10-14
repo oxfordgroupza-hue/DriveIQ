@@ -8,6 +8,7 @@ import Splash from "./Splash";
 export default function Layout() {
   return (
     <div className="min-h-dvh flex flex-col">
+      <Splash />
       <Header />
       <Banner />
       <main className="flex-1 pt-20 pb-20 lg:pb-0">
