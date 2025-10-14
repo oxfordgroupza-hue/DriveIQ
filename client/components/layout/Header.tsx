@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import InstallPrompt from "../InstallPrompt";
 
 export default function Header() {
   const location = useLocation();
@@ -70,6 +71,7 @@ export default function Header() {
               Home
             </Link>
           )}
+          <span className="md:hidden"><InstallPrompt /></span>
         </div>
       </div>
     </header>
