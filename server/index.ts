@@ -39,6 +39,11 @@ export function createServer() {
   app.get("/api/user", getUser);
   app.post("/api/confirm-payment", confirmPayment);
 
+  // PayFast
+  const { initiatePayfast, payfastNotify } = await import("./routes/payfast");
+  app.post("/api/payfast/initiate", initiatePayfast);
+  app.post("/api/payfast/notify", express.urlencoded({ extended: false }), payfastNotify);
+
   // Vision testing
   app.post("/api/send-vision-link", sendVisionLink);
   app.get("/api/vision-token/:token", getVisionToken);

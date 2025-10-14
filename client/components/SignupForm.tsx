@@ -340,6 +340,31 @@ export default function SignupForm() {
       });
       alert("Payment confirmed (demo)");
     };
+    const payWithPayfast = async () => {
+      try {
+        const r = await fetch("/api/payfast/initiate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, name, amount: 99 }),
+        });
+        const j = await r.json();
+        if (!j.ok) return alert("Payment init failed");
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = j.gateway;
+        Object.entries(j.fields || {}).forEach(([k, v]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = k;
+          input.value = String(v);
+          form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+      } catch {
+        alert("Payment init failed");
+      }
+    };
     const sendVision = async () => {
       const r = await fetch("/api/send-vision-link", {
         method: "POST",
@@ -374,6 +399,9 @@ export default function SignupForm() {
           gift cards, airtime, data, or cash.
         </div>
         <div className="flex flex-wrap gap-2 pt-2 justify-center md:justify-start">
+          <Button type="button" onClick={payWithPayfast}>
+            Pay with PayFast
+          </Button>
           <Button type="button" variant="outline" onClick={confirmPay}>
             Confirm Payment
           </Button>
