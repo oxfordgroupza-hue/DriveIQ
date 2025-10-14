@@ -48,7 +48,7 @@ export default function Index() {
           <div className="text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 text-xs">
               <span className="inline-flex size-2 rounded-full bg-accent" />{" "}
-              Early Bird now open — R99 once-off
+              Early Bird now open — R139 once-off (R99 for students)
             </div>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               Master K53 and drive with confidence.
@@ -189,7 +189,7 @@ export default function Index() {
         <div className="grid gap-8 lg:grid-cols-5 lg:items-center">
           <div className="lg:col-span-3 text-center lg:text-left">
             <h3 className="text-3xl font-bold">
-              Early Bird Offer — R99 once-off
+              Early Bird Offer — R139 once-off (R99 for students)
             </h3>
             <ul className="mt-4 text-muted-foreground space-y-2 text-sm">
               <li>Access to K53 theory and AI vision screening</li>
