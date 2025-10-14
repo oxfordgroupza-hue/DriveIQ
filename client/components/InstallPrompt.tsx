@@ -33,7 +33,7 @@ function fireConfetti(durationMs = 1200) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    pieces.forEach(p => {
+    pieces.forEach((p) => {
       p.y += p.s * 4;
       p.x += Math.sin((p.y + d) / 40) * 1.5;
       ctx.beginPath();
@@ -48,7 +48,8 @@ function fireConfetti(durationMs = 1200) {
 }
 
 export default function InstallPrompt() {
-  const [deferred, setDeferred] = React.useState<BeforeInstallPromptEvent | null>(null);
+  const [deferred, setDeferred] =
+    React.useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = React.useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
@@ -81,7 +82,11 @@ export default function InstallPrompt() {
   if (!isMobile || installed || !deferred) return null;
 
   return (
-    <Button onClick={onClick} size="sm" className="bg-primary text-primary-foreground shadow hover:bg-primary/90">
+    <Button
+      onClick={onClick}
+      size="sm"
+      className="bg-primary text-primary-foreground shadow hover:bg-primary/90"
+    >
       Download Mobile App
     </Button>
   );

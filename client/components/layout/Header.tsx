@@ -71,7 +71,9 @@ export default function Header() {
               Home
             </Link>
           )}
-          <span className="md:hidden"><InstallPrompt /></span>
+          <span className="md:hidden">
+            <InstallPrompt />
+          </span>
         </div>
       </div>
     </header>

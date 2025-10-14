@@ -713,7 +713,9 @@ export default function SignupForm() {
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium">Student Card (photo) {isStudent ? "— required" : "(optional)"}</label>
+          <label className="text-sm font-medium">
+            Student Card (photo) {isStudent ? "— required" : "(optional)"}
+          </label>
           <div className="mt-1 flex items-center gap-3">
             <input
               type="file"
@@ -741,7 +743,9 @@ export default function SignupForm() {
           />
         </div>
         <div>
-          <label className="text-sm font-medium">ID Document (photo) — required</label>
+          <label className="text-sm font-medium">
+            ID Document (photo) — required
+          </label>
           <div className="mt-1 flex items-center gap-3">
             <input
               type="file"
