@@ -57,6 +57,9 @@ export default function SignupForm() {
   const [city, setCity] = useState("");
   const [institution, setInstitution] = useState("");
   const [licenseCode, setLicenseCode] = useState("");
+  const [isStudent, setIsStudent] = useState(false);
+  const [idNumber, setIdNumber] = useState("");
+  const [idImage, setIdImage] = useState<string | null>(null);
   const [studentCardImage, setStudentCardImage] = useState<string | null>(null);
   const [terms, setTerms] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -99,6 +102,12 @@ export default function SignupForm() {
     if (!f) return setStudentCardImage(null);
     const reader = new FileReader();
     reader.onload = () => setStudentCardImage(String(reader.result || ""));
+    reader.readAsDataURL(f);
+  };
+  const onUploadId = async (f: File | null) => {
+    if (!f) return setIdImage(null);
+    const reader = new FileReader();
+    reader.onload = () => setIdImage(String(reader.result || ""));
     reader.readAsDataURL(f);
   };
 
@@ -181,9 +190,12 @@ export default function SignupForm() {
       !province ||
       !city ||
       !institution ||
-      !licenseCode
+      !licenseCode ||
+      !idNumber ||
+      !idImage
     )
       return false;
+    if (isStudent && !studentCardImage) return false;
     if (!smsVerified) return false;
     if (hasWhatsApp) return waVerified;
     return emailVerified;
@@ -206,6 +218,9 @@ export default function SignupForm() {
         smsVerified,
         whatsappVerified: waVerified,
         emailVerified,
+        isStudent,
+        idNumber,
+        idImage,
         studentCardImage,
         terms,
         referrer,
@@ -233,6 +248,9 @@ export default function SignupForm() {
           smsVerified,
           whatsappVerified: waVerified,
           emailVerified,
+          isStudent,
+          idNumber,
+          idImage,
           studentCardImage,
           terms,
           referrer: referrer || null,
@@ -343,10 +361,11 @@ export default function SignupForm() {
     };
     const payWithPayfast = async () => {
       try {
+        const amount = isStudent ? 99 : 139;
         const r = await fetch("/api/payfast/initiate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, name, amount: 99 }),
+          body: JSON.stringify({ email, name, amount }),
         });
         const j = await r.json();
         if (!j.ok) return alert("Payment init failed");
@@ -682,9 +701,19 @@ export default function SignupForm() {
             onChange={(e) => setInstitution(e.target.value)}
             placeholder="e.g. Tshwane North TVET"
           />
+          <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+            <input
+              id="isstudent"
+              type="checkbox"
+              checked={isStudent}
+              onChange={(e) => setIsStudent(e.target.checked)}
+              className="size-4 accent-primary"
+            />
+            <label htmlFor="isstudent">I am a student/learner (R99)</label>
+          </div>
         </div>
         <div>
-          <label className="text-sm font-medium">Student Card (photo)</label>
+          <label className="text-sm font-medium">Student Card (photo) {isStudent ? "— required" : "(optional)"}</label>
           <div className="mt-1 flex items-center gap-3">
             <input
               type="file"
@@ -693,6 +722,34 @@ export default function SignupForm() {
               onChange={(e) => onUpload(e.target.files?.[0] || null)}
             />
             {studentCardImage && (
+              <span className="text-xs text-green-600 inline-flex items-center gap-1">
+                <UploadCloud className="size-4" /> Uploaded
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <label className="text-sm font-medium">South African ID Number</label>
+          <input
+            className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm"
+            value={idNumber}
+            onChange={(e) => setIdNumber(e.target.value)}
+            placeholder="13-digit ID number"
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium">ID Document (photo) — required</label>
+          <div className="mt-1 flex items-center gap-3">
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={(e) => onUploadId(e.target.files?.[0] || null)}
+            />
+            {idImage && (
               <span className="text-xs text-green-600 inline-flex items-center gap-1">
                 <UploadCloud className="size-4" /> Uploaded
               </span>
@@ -726,7 +783,7 @@ export default function SignupForm() {
           disabled={!canSubmit() || submitting}
           className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          Join Early Bird — R99
+          {isStudent ? "Join Early Bird — R99" : "Join Early Bird — R139"}
         </Button>
         {typeof remaining === "number" && (
           <span className="text-xs text-muted-foreground">
