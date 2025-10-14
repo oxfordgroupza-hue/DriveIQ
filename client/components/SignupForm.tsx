@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { auth, db } from "@/lib/firebase";
+import { signInAnonymously } from "firebase/auth";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {
   Check,
   Copy,
@@ -82,6 +85,12 @@ export default function SignupForm() {
       .then((r) => r.json())
       .then((d: SlotsResponse) => setRemaining(d.remaining))
       .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      signInAnonymously(auth).catch(() => {});
+    }
   }, []);
 
   const onBlurWhatsapp = () => setWhatsapp((prev) => normalizeZA(prev));
@@ -210,6 +219,31 @@ export default function SignupForm() {
       const data: SignupResponse = await res.json();
       setResult(data);
       setRemaining(data.remaining);
+
+      try {
+        await addDoc(collection(db, "leads"), {
+          name,
+          email,
+          whatsapp: normalizeZA(whatsapp),
+          province,
+          city,
+          institution,
+          licenseCode,
+          hasWhatsApp,
+          smsVerified,
+          whatsappVerified: waVerified,
+          emailVerified,
+          studentCardImage,
+          terms,
+          referrer: referrer || null,
+          socialProvider: socialProvider || null,
+          referralLink: data?.referralLink || null,
+          code: data?.code || null,
+          remaining: typeof data?.remaining === "number" ? data.remaining : null,
+          uid: auth.currentUser?.uid || null,
+          createdAt: serverTimestamp(),
+        });
+      } catch {}
     } catch (e) {
       console.error(e);
     } finally {
