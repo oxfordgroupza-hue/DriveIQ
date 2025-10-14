@@ -20,6 +20,9 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     void initAnalytics();
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
   }, []);
 
   return (
