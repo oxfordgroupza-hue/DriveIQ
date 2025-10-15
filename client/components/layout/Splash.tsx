@@ -1,5 +1,6 @@
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import InstallPrompt from "../InstallPrompt";
 
 export default function Splash() {
   const isMobile = useIsMobile();
