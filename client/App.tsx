@@ -30,7 +30,12 @@ const App = () => {
         // Try to enter fullscreen on first tap for better immersion
         // Requires user gesture; may fail silently
         const root: any = document.documentElement as any;
-        if (isMobile && document.fullscreenEnabled && !document.fullscreenElement && root.requestFullscreen) {
+        if (
+          isMobile &&
+          document.fullscreenEnabled &&
+          !document.fullscreenElement &&
+          root.requestFullscreen
+        ) {
           await root.requestFullscreen();
         }
       } catch {}

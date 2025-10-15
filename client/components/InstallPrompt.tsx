@@ -47,7 +47,9 @@ function fireConfetti(durationMs = 1200) {
   requestAnimationFrame(draw);
 }
 
-export default function InstallPrompt({ onAccepted }: { onAccepted?: () => void } = {}) {
+export default function InstallPrompt({
+  onAccepted,
+}: { onAccepted?: () => void } = {}) {
   const [deferred, setDeferred] =
     React.useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = React.useState(false);

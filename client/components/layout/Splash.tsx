@@ -25,7 +25,8 @@ export default function Splash() {
         <InstallPrompt onAccepted={() => {}} />
       </div>
       <div className="absolute bottom-4 inset-x-0 text-center text-xs text-muted-foreground px-4">
-        © 2025 DriveIQ Academy. Powered by Oxford Business Group (PTY) LTD. All rights reserved.
+        © 2025 DriveIQ Academy. Powered by Oxford Business Group (PTY) LTD. All
+        rights reserved.
       </div>
     </div>
   );
