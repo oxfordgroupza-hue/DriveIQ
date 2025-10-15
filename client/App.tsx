@@ -2,6 +2,7 @@ import "./global.css";
 
 import { initAnalytics } from "@/lib/firebase";
 import { useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -18,12 +19,26 @@ import VisionTest from "./pages/VisionTest";
 const queryClient = new QueryClient();
 
 const App = () => {
+  const isMobile = useIsMobile();
   useEffect(() => {
     void initAnalytics();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
     }
-  }, []);
+    const onFirst = async () => {
+      try {
+        // Try to enter fullscreen on first tap for better immersion
+        // Requires user gesture; may fail silently
+        const root: any = document.documentElement as any;
+        if (isMobile && document.fullscreenEnabled && !document.fullscreenElement && root.requestFullscreen) {
+          await root.requestFullscreen();
+        }
+      } catch {}
+      window.removeEventListener("pointerdown", onFirst);
+    };
+    window.addEventListener("pointerdown", onFirst, { once: true });
+    return () => window.removeEventListener("pointerdown", onFirst);
+  }, [isMobile]);
 
   return (
     <QueryClientProvider client={queryClient}>
