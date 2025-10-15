@@ -47,7 +47,7 @@ function fireConfetti(durationMs = 1200) {
   requestAnimationFrame(draw);
 }
 
-export default function InstallPrompt() {
+export default function InstallPrompt({ onAccepted }: { onAccepted?: () => void } = {}) {
   const [deferred, setDeferred] =
     React.useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = React.useState(false);
@@ -74,6 +74,13 @@ export default function InstallPrompt() {
       const choice = await deferred?.userChoice;
       if (choice?.outcome === "accepted") {
         fireConfetti();
+        try {
+          const root: any = document.documentElement as any;
+          if (document.fullscreenEnabled && root.requestFullscreen) {
+            await root.requestFullscreen();
+          }
+        } catch {}
+        onAccepted?.();
         setTimeout(() => navigate("/vision-test"), 1100);
       }
     } catch {}
