@@ -32,14 +32,14 @@ export default function Splash() {
           animation: pulse-splash 1.5s ease-in-out 6;
         }
       `}</style>
-      
+
       <div className="flex flex-col items-center gap-6">
         <img
           src="https://cdn.builder.io/api/v1/image/assets%2Fd0bbd55af2ca41b992bc39029063eb3e%2F3e3b409a071745c98373fa1da8e1e492?format=webp&width=800"
           alt="DriveIQ splash"
           className="w-48 h-48 object-contain splash-pulse"
         />
-        
+
         {showInstall && (
           <div className="animate-in fade-in duration-500">
             <InstallPrompt />
@@ -48,7 +48,8 @@ export default function Splash() {
       </div>
 
       <div className="absolute inset-x-0 bottom-0 px-6 py-4 text-center text-xs text-muted-foreground">
-        © 2025 DriveIQ Academy. Powered by Oxford Business Group (PTY) LTD. All rights reserved.
+        © 2025 DriveIQ Academy. Powered by Oxford Business Group (PTY) LTD. All
+        rights reserved.
       </div>
     </div>
   );
