@@ -48,7 +48,7 @@ export default function Index() {
           <div className="text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border bg-background/70 px-3 py-1 text-xs">
               <span className="inline-flex size-2 rounded-full bg-accent" />{" "}
-              Early Bird now open — R139 once-off (R99 for students)
+              Early Bird now open — R139 once-off
             </div>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               Master K53 and drive with confidence.
@@ -76,7 +76,7 @@ export default function Index() {
             </div>
             <div className="mt-6 grid grid-cols-2 gap-4 text-center text-xs text-muted-foreground sm:grid-cols-4">
               <div className="rounded-md border bg-background/50 p-3">
-                TVET-ready
+                University & TVET-ready
               </div>
               <div className="rounded-md border bg-background/50 p-3">
                 NSFAS-aligned
@@ -144,7 +144,7 @@ export default function Index() {
           <Feature
             icon={Users}
             title="DriveIQ Connect"
-            desc="Institution portal for TVETs, NSFAS and instructors with analytics and reports."
+            desc="Institution portal for University/TVETs, NSFAS and instructors with analytics and reports."
           />
           <Feature
             icon={Smartphone}
@@ -189,7 +189,7 @@ export default function Index() {
         <div className="grid gap-8 lg:grid-cols-5 lg:items-center">
           <div className="lg:col-span-3 text-center lg:text-left">
             <h3 className="text-3xl font-bold">
-              Early Bird Offer — R139 once-off (R99 for students)
+              Early Bird Offer — R139 once-off
             </h3>
             <ul className="mt-4 text-muted-foreground space-y-2 text-sm">
               <li>Access to K53 theory and AI vision screening</li>
@@ -219,7 +219,7 @@ export default function Index() {
               <p className="mt-3 text-muted-foreground">
                 Life skills and job readiness beyond driving. Defensive
                 strategies, safety awareness, soft skills, and employability —
-                designed with TVET and NSFAS pathways in mind.
+                designed with University, TVET and NSFAS pathways in mind.
               </p>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-xl border bg-card/60 p-5">
